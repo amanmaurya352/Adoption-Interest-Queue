@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Manage and track adoption interest records in one simple, accessible queue.">
+<meta name="theme-color" content="#ffffff">
+<title>AdoptQueue | Adoption Interest Queue</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="js/script.js" defer></script>
+</head>
+<body>
+    <header class="site-header">
+        <div class="header-container">
+            <a class="brand" href="#home" aria-label="AdoptQueue home">
+                <span class="brand-name brand-shine">AdoptQueue</span>
+                <span class="brand-tagline">Adoption Interest Queue</span>
+            </a>
+            <button
+    class="mobile-menu-toggle"
+    id="mobile-menu-toggle"
+    type="button"
+    aria-label="Open menu"
+    aria-expanded="false"
+    aria-controls="main-navigation"
+>
+    <span></span>
+    <span></span>
+    <span></span>
+</button>
+
+            <nav class="main-navigation"
+                id="main-navigation"
+                 aria-label="Main navigation">
+                 
+                <a class="nav-link" href="#events">View Interests</a>
+                <a class="nav-link" href="#add-event">Add Interest</a>
+               <button
+    class="theme-toggle"
+    id="theme-toggle"
+    type="button"
+    aria-label="Switch to dark mode"
+    aria-pressed="false"
+>
+    <span class="theme-toggle-thumb" aria-hidden="true">☀</span>
+</button>
+            </nav>
+        </div>
+    </header>
+
+    <main id="home">
+        <section class="hero-section" aria-labelledby="hero-title">
+            <div class="hero-content">
+                <p class="eyebrow">ADOPTION · CARE · COMMUNITY</p>
+                <h1 id="hero-title">Every adoption <span>starts</span> with interest.</h1>
+                <p class="hero-description">
+                    Track applicant details, animal preferences, and adoption interest status in one place.
+                </p>
+                <a class="primary-button create-event-button" href="#events">View adoption interests</a>
+            </div>
+        </section>
+
+        <section class="events-section" id="events" aria-labelledby="events-title">
+            <div class="section-heading">
+                <div>
+                    <p class="eyebrow">ADOPTION MANAGEMENT</p>
+                    <h2 id="events-title">Adoption Interests</h2>
+                    <p class="section-description">
+                        Review applicants and track each adoption interest.
+                    </p>
+                </div>
+                <p class="event-count" id="event-count" aria-live="polite"></p>
+            </div>
+
+            <div class="event-controls">
+                <div class="search-field">
+                    <label for="event-search">Search interests</label>
+                    <input
+                        id="event-search"
+                        name="search"
+                        type="search"
+                        placeholder="Search by applicant, animal or contact"
+                        autocomplete="off"
+                    >
+                </div>
+
+                <div class="filter-field">
+                    <label for="event-filter">Animal type</label>
+                   <select id="event-filter" name="category">
+    <option value="all">All animal types</option>
+    <option value="Dog">Dogs</option>
+    <option value="Cat">Cats</option>
+    <option value="Rabbit">Rabbits</option>
+    <option value="Bird">Birds</option>
+    <option value="Other">Other</option>
+</select>
+                </div>
+            </div>
+
+            <div
+                class="loading-state"
+                id="loading-state"
+                role="status"
+                aria-live="polite"
+                hidden
+            >
+                <span class="loading-spinner" aria-hidden="true"></span>
+                <p>Loading adoption interests...</p>
+            </div>
+
+            <div class="empty-state" id="empty-state" hidden>
+                <h3>No data found</h3>
+                <p>Try a different search or animal type.</p>
+                <button class="secondary-button" id="reset-filters" type="button">
+                    Clear filters
+                </button>
+            </div>
+
+            <div class="event-grid" id="event-grid" aria-label="Adoption interests"></div>
+        </section>
+
+        <section class="add-event-section" id="add-event" aria-labelledby="add-event-title">
+            <div class="form-intro">
+                <p class="eyebrow">INTEREST MANAGEMENT</p>
+<h2 id="add-event-title">Add Adoption Interest</h2>
+<p class="section-description">
+    Record an applicant's details and animal adoption preferences.
+</p>
+            </div>
+
+            <form id="event-form" novalidate>
+    <div class="form-grid">
+        <div class="form-field">
+            <label for="event-title">Applicant name</label>
+            <input id="event-title" name="applicantName" type="text" maxlength="80" required aria-describedby="title-error">
+            <span class="field-error" id="title-error" hidden></span>
+        </div>
+
+        <div class="form-field">
+            <label for="event-author">Animal name</label>
+            <input id="event-author" name="animalName" type="text" maxlength="80" required aria-describedby="author-error">
+            <span class="field-error" id="author-error" hidden></span>
+        </div>
+
+        <div class="form-field">
+            <label for="event-category">Animal type</label>
+            <select id="event-category" name="animalType" required aria-describedby="category-error">
+                <option value="">Select animal type</option>
+                <option value="Dog">Dog</option>
+                <option value="Cat">Cat</option>
+                <option value="Rabbit">Rabbit</option>
+                <option value="Bird">Bird</option>
+                <option value="Other">Other</option>
+            </select>
+            <span class="field-error" id="category-error" hidden></span>
+        </div>
+
+        <div class="form-field">
+            <label for="event-location">Applicant contact</label>
+            <input id="event-location" name="contact" type="text" maxlength="120" required aria-describedby="location-error">
+            <span class="field-error" id="location-error" hidden></span>
+        </div>
+
+        <div class="form-field">
+            <label for="event-date">Interest date</label>
+            <input id="event-date" name="interestDate" type="date" required aria-describedby="date-error">
+            <span class="field-error" id="date-error" hidden></span>
+        </div>
+
+        <div class="form-field">
+            <label for="event-time">Status</label>
+            <select id="event-time" name="status" required aria-describedby="time-error">
+                <option value="">Select status</option>
+                <option value="Pending">Pending</option>
+                <option value="Contacted">Contacted</option>
+                <option value="Approved">Approved</option>
+                <option value="Completed">Completed</option>
+            </select>
+            <span class="field-error" id="time-error" hidden></span>
+        </div>
+
+        <div class="form-field form-field-full">
+            <label for="event-description">Notes</label>
+            <textarea id="event-description" name="notes" rows="4" maxlength="500" required aria-describedby="description-error"></textarea>
+            <span class="field-error" id="description-error" hidden></span>
+        </div>
+    </div>
+
+    <button class="primary-button" type="submit">Add Adoption Interest</button>
+    <p class="form-status" id="form-status" role="status" aria-live="polite"></p>
+</form>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="footer-container">
+            <div class="footer-brand">
+                <a href="#home" aria-label="AdoptQueue home">AdoptQueue</a>
+<p>Adoption Interest Queue</p>
+            </div>
+
+            <div class="footer-note">
+                <p>Organizing adoption interest records with clarity and care.</p>
+            </div>
+
+            <div class="footer-navigation">
+                <a href="#events">View Interests</a>
+<a href="#add-event">Add Interest</a>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>© 2026 AdoptQueue. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>
